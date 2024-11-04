@@ -1,0 +1,162 @@
+<!-- 讲了伪元素，html内置标签，盒子模型 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>navLink</title>
+    <style>
+        /* Global box model reset */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            /* Include padding and border in width and height */
+        }
+
+        html,
+        body {
+            background-color: rgb(51, 29, 216);
+            height: 100%;
+            /* prevent scrollbars from appearing  */
+            overflow: hidden;
+            margin: 0;
+            /* Remove default margin */
+            padding: 0;
+            /* Remove default padding */
+            position: relative;
+        }
+
+        nav {
+            position: absolute;
+            text-align: center;
+            top: 20%;
+            width: 100%;
+        }
+
+        nav a {
+            position: relative;
+            text-decoration: none;
+            margin: 0 30px;
+            color: white;
+        }
+
+        nav a::before,
+        nav a::after {
+            content: "";
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border: 2px solid black;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.2);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover::before,
+        nav a:hover::after{
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+        nav a::after{
+            width: 50px;
+            height: 50px;
+            border-width: 6px;
+        }
+
+        /*  
+        盒子模型默认的height由margin, padding, border,content height组成
+        一般我们不想把margin 放进去，所以我们需要更改盒模型
+
+        button的默认display是inline-block,所以在一行 ,并且button是浏览器自带标签有默认的样式。
+        */
+
+
+        .btn {
+            width: 100px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            border: 0px;    
+
+        }
+
+        .btn2 {
+            padding: 0px;
+            border: 0px;
+            width: 100px;
+            height: 20px;
+        }
+
+        .btn::before {
+            content: "👉";
+        }
+
+        .btn::after {
+            content: "👉";
+
+        }
+
+        .dd {
+            display: inline-block;
+            width: 100px;
+            height: 20px;
+            background-color: aliceblue;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- sematic HTML refers to using HTML in a way that accurately reflects the content they contain. Instead of using non-descriptive elements like `div` or `span`
+        sematic tags describe the purpose of the content. -->
+    <button class="btn">default</button>
+    <button class="btn2">default</button>
+    <div class="dd"></div>
+    <nav>
+        <a href="">点赞</a>
+        <a href="">投币</a>
+        <a href="">收藏</a>
+    </nav>
+</body>
+
+</html>
+
+<!-- tips -->
+<!-- margin %值是根据父元素的宽度来定义的，即便是margin-top -->
+<!-- 绝对定位块级元素的宽度可以根据：
+    显式设置的 width；
+    通过 left 和 right 确定的宽度；
+    如果都没有设置，则由内容决定。
+
+    普通的块级元素：
+    普通块级元素默认占据父容器的全部宽度。
+    如果设置了 width，它会按照 CSS 盒模型进行计算。
+    box-sizing 决定了宽度是否包含内边距和边框。
+    总宽度不仅取决于 width，还会受到 padding、border 和 margin 的影响。
+ -->
+
+<!-- 文档流
+ 块级元素会占满一整行，并推动其他元素到下一行。
+行内元素会并排显示在同一行，直到一行放不下时换行。
+
+以下情况会使元素脱离文档流：
+
+绝对定位（absolute）
+固定定位（fixed）
+浮动（float）
+伪元素设置为绝对定位
+display: none
+当元素脱离文档流时，它不会再影响其他元素的布局。了解这些情况对于 CSS 布局和页面调试非常重要。。
+
+当元素脱离文档流时：
+
+它不会影响其他元素的布局，也不会为其他元素腾出空间。
+它可能导致与其他元素的重叠，尤其是绝对定位和固定定位时。
+父元素的高度不会包含这些脱离的元素（如绝对定位和浮动元素）。
+使用浮动时需要清除浮动，否则会导致父容器高度塌陷。 
+-->
