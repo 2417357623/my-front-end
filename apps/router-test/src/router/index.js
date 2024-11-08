@@ -9,6 +9,19 @@ const routes = [
         component: HomePage
     },
     {
+        path:'/protect',
+        name:'protect',
+        component:()=>import("@/pages/Protect.vue"),
+        meta:{
+            requestsAuth:true,
+        }
+    },
+    {
+        path:'/login',
+        name:'login',
+        component:()=>import("@/pages/login.vue")
+    },
+    {
         path:"/destination/:id/:slug/:experienceSlug",
         name:"Experience.show",
         component:()=>import("@/pages/ExperienceShow.vue"),
@@ -55,6 +68,12 @@ const router = createRouter({
         }else{
             return savedPosition || {top:0 , behavior:"smooth"}
         }
+    }
+})
+
+router.beforeEach((to,from)=>{
+    if(to.meta.requestsAuth && !window.user){
+        return {name:"login"}
     }
 })
 
